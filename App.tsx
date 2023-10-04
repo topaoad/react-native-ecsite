@@ -58,6 +58,8 @@ export default function App() {
           contentContainerStyle={{ alignItems: "center" }}
         />
       </View>
+      <Text>Open up App.tsx to start working on your app!</Text>
+      <StatusBar style="auto" />
     </SafeAreaView>
   );
 }
