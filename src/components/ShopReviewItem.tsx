@@ -1,23 +1,30 @@
-import React from "react";
-import { View, StyleSheet, Image, Text, Dimensions, TouchableOpacity } from "react-native";
+import React from "react"
+import {
+  View,
+  StyleSheet,
+  Image,
+  Text,
+  Dimensions,
+  TouchableOpacity,
+} from "react-native"
 /* types */
-import { Shop } from "@/types/shop";
+import { Shop } from "@/types/shop"
 /* components */
-import { Stars } from "./Stars";
+import { Stars } from "./Stars"
 // import { Stars } from "@/Stars";
 
-const { width } = Dimensions.get("window");
-const CONTAINER_WIDTH = width / 2;
-const PADDING = 16;
-const IMAGE_WIDTH = CONTAINER_WIDTH - PADDING * 2;
+const { width } = Dimensions.get("window")
+const CONTAINER_WIDTH = width / 2
+const PADDING = 16
+const IMAGE_WIDTH = CONTAINER_WIDTH - PADDING * 2
 
 type Props = {
-  shop: Shop;
-  onPress?: () => void;
-};
+  shop: Shop
+  onPress?: () => void
+}
 
 export const ShopReviewItem: React.FC<Props> = ({ shop, onPress }: Props) => {
-  const { name, place, imageUrl, score } = shop;
+  const { name, place, imageUrl, score } = shop
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
       <Image source={{ uri: imageUrl }} style={styles.image} />
@@ -25,8 +32,8 @@ export const ShopReviewItem: React.FC<Props> = ({ shop, onPress }: Props) => {
       <Text style={styles.placeText}>{place}</Text>
       <Stars score={score} />
     </TouchableOpacity>
-  );
-};
+  )
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -48,4 +55,4 @@ const styles = StyleSheet.create({
     color: "#888",
     marginVertical: 8,
   },
-});
+})
