@@ -4,10 +4,12 @@ import { createStackNavigator } from "@react-navigation/stack"
 import { HomeScreen } from "../screens/homeScreen"
 import { ShopScreen } from "../screens/shopScreen"
 
+
 const Stack = createStackNavigator()
 
 export const HomeStackNavigator = () => (
   <Stack.Navigator>
+    {/* 一番上のコンポーネントが初めに表示される */}
     <Stack.Screen
       name="Home"
       component={HomeScreen}

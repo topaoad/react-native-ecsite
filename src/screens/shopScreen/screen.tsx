@@ -1,12 +1,25 @@
 import React, { useEffect, useState } from "react"
 import { StyleSheet, SafeAreaView, Text } from "react-native"
+import { RouteProp } from "@react-navigation/native"
+import { RootStackParamList } from "@/types/navigation"
+import { StackNavigationProp } from "@react-navigation/stack"
+import { ShopDetail } from "../../components/ShopDetail"
 
-export const ShopScreen: React.FC = () => {
-  useEffect(() => {}, [])
+type Props = {
+  navigation: StackNavigationProp<RootStackParamList, "Shop">
+  route: RouteProp<RootStackParamList, "Shop">
+}
+
+export const ShopScreen: React.FC<Props> = ({ navigation, route }: Props) => {
+  const { shop } = route.params
+
+  useEffect(() => {
+    navigation.setOptions({ title: shop.name })
+  }, [shop])
 
   return (
     <SafeAreaView style={styles.container}>
-      <Text>Shop Screen</Text>
+      <ShopDetail shop={shop} />
     </SafeAreaView>
   )
 }
@@ -16,5 +29,12 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     justifyContent: "flex-start",
+    textAlign: "center",
+  },
+  inner: {
+    flex: 1,
+    backgroundColor: "#fff",
+    justifyContent: "flex-start",
+    textAlign: "center",
   },
 })
