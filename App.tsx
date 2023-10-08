@@ -2,10 +2,13 @@ import { StatusBar } from "expo-status-bar";
 import { FlatList, StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { Firestore, collection, getDocs, getFirestore } from "firebase/firestore";
+import { Firestore, collection, getDocs, getFirestore, orderBy, query, where } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 import { getStorage } from "firebase/storage";
 import { useEffect, useState } from "react";
+import { Shop } from "@/types/shop";
+// import { ShopReviewItem } from "@/components/ShopReviewItem";
+import { ShopReviewItem } from "./src/components/ShopReviewItem";
 
 const firebaseConfig = {
   apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
@@ -21,21 +24,18 @@ const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 const db = getFirestore(app);
 
-type Shop = {
-  id: string;
-  name: string;
-  place: string;
-};
-
 export default function App() {
   const [shops, setShops] = useState<Shop[]>([]);
   useEffect(() => {
     const querySnapshot = async () => {
-      const snapshot = await getDocs(collection(db, "shops"));
+      const q = query(collection(db, "shops"), where("place", "==", "品川"), orderBy("score", "desc"));
+      const snapshot = await getDocs(q);
       const shops = snapshot.docs.map((doc) => ({
         id: doc.id,
         name: doc.data().name,
         place: doc.data().place,
+        score: doc.data().score,
+        imageUrl: doc.data().imageUrl,
       }));
       setShops(shops);
     };
@@ -46,17 +46,7 @@ export default function App() {
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.flatListContainer}>
-        <FlatList
-          data={shops}
-          renderItem={({ item }) => (
-            <View style={styles.flatListContainer}>
-              <Text>{item.name}</Text>
-              <Text>{item.place}</Text>
-            </View>
-          )}
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={{ alignItems: "center" }}
-        />
+        <FlatList data={shops} renderItem={({ item }: { item: Shop }) => <ShopReviewItem shop={item} />} keyExtractor={(item, index) => index.toString()} numColumns={2} />
       </View>
     </SafeAreaView>
   );
