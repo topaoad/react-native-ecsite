@@ -1,13 +1,19 @@
 import React, { useEffect, useState } from "react"
-import { StyleSheet, FlatList, SafeAreaView } from "react-native"
+import { StyleSheet, FlatList, SafeAreaView, View } from "react-native"
 /* lib */
-import { getShops } from "@/lib/firebase"
+import { getShops } from "../../lib/firebase"
 /* components */
-import { ShopReviewItem } from "@/components/ShopReviewItem"
+import { ShopReviewItem } from "../../components/ShopReviewItem"
 /* types */
 import { Shop } from "@/types/shop"
+import { RootStackParamList } from "@/types/navigation"
+import { StackNavigationProp } from "@react-navigation/stack"
 
-export const HomeScreen = () => {
+type Props = {
+  navigation: StackNavigationProp<RootStackParamList, "Home">
+}
+
+export const HomeScreen = ({ navigation }: Props) => {
   const [shops, setShops] = useState<Shop[]>([])
 
   useEffect(() => {
@@ -19,16 +25,21 @@ export const HomeScreen = () => {
     setShops(shops)
   }
 
+  const onPressShop = () => {
+    navigation.navigate("Shop")
+  }
   return (
     <SafeAreaView style={styles.container}>
-      <FlatList
-        data={shops}
-        renderItem={({ item }: { item: Shop }) => (
-          <ShopReviewItem shop={item} />
-        )}
-        keyExtractor={(item, index) => index.toString()}
-        numColumns={2}
-      />
+      <View style={styles.flatListContainer}>
+        <FlatList
+          data={shops}
+          renderItem={({ item }: { item: Shop }) => (
+            <ShopReviewItem shop={item} onPress={onPressShop} />
+          )}
+          keyExtractor={(item, index) => index.toString()}
+          numColumns={2}
+        />
+      </View>
     </SafeAreaView>
   )
 }
@@ -39,5 +50,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+  flatListContainer: {
+    width: "100%",
+    justifyContent: "center",
+    alignItems: "center",
   },
 })
