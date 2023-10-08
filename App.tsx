@@ -1,11 +1,23 @@
-import { StatusBar } from "expo-status-bar";
-import { FlatList, StyleSheet, Text, View, SafeAreaView } from "react-native";
-import { initializeApp } from "firebase/app";
-import { getAnalytics } from "firebase/analytics";
-import { Firestore, collection, getDocs, getFirestore } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
-import { getStorage } from "firebase/storage";
-import { useEffect, useState } from "react";
+import { StatusBar } from "expo-status-bar"
+import { FlatList, StyleSheet, Text, View, SafeAreaView } from "react-native"
+import { initializeApp } from "firebase/app"
+import { getAnalytics } from "firebase/analytics"
+import {
+  Firestore,
+  collection,
+  getDocs,
+  getFirestore,
+  orderBy,
+  query,
+  where,
+} from "firebase/firestore"
+import { getAuth } from "firebase/auth"
+import { getStorage } from "firebase/storage"
+import { useEffect, useState } from "react"
+import { Shop } from "@/types/shop"
+// import { ShopReviewItem } from "@/components/ShopReviewItem";
+import { ShopReviewItem } from "./src/components/ShopReviewItem"
+import React from "react"
 
 const firebaseConfig = {
   apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
@@ -15,51 +27,49 @@ const firebaseConfig = {
   messagingSenderId: process.env.EXPO_PUBLIC_FIREBASE_MESSAGING_SENDER_ID,
   appId: process.env.EXPO_PUBLIC_FIREBASE_APP_ID,
   measurementId: process.env.EXPO_PUBLIC_FIREBASE_MEASUREMENT_ID,
-};
+}
 
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
-const db = getFirestore(app);
-
-type Shop = {
-  id: string;
-  name: string;
-  place: string;
-};
+const app = initializeApp(firebaseConfig)
+const analytics = getAnalytics(app)
+const db = getFirestore(app)
 
 export default function App() {
-  const [shops, setShops] = useState<Shop[]>([]);
+  const [shops, setShops] = useState<Shop[]>([])
   useEffect(() => {
     const querySnapshot = async () => {
-      const snapshot = await getDocs(collection(db, "shops"));
+      const q = query(
+        collection(db, "shops"),
+        where("place", "==", "品川"),
+        orderBy("score", "desc"),
+      )
+      const snapshot = await getDocs(q)
       const shops = snapshot.docs.map((doc) => ({
         id: doc.id,
         name: doc.data().name,
         place: doc.data().place,
-      }));
-      setShops(shops);
-    };
-    querySnapshot();
-  }, []);
-  console.log(shops);
+        score: doc.data().score,
+        imageUrl: doc.data().imageUrl,
+      }))
+      setShops(shops)
+    }
+    querySnapshot()
+  }, [])
+  console.log(shops)
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.flatListContainer}>
         <FlatList
           data={shops}
-          renderItem={({ item }) => (
-            <View style={styles.flatListContainer}>
-              <Text>{item.name}</Text>
-              <Text>{item.place}</Text>
-            </View>
+          renderItem={({ item }: { item: Shop }) => (
+            <ShopReviewItem shop={item} />
           )}
-          keyExtractor={(item) => item.id}
-          contentContainerStyle={{ alignItems: "center" }}
+          keyExtractor={(item, index) => index.toString()}
+          numColumns={2}
         />
       </View>
     </SafeAreaView>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -74,4 +84,4 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
   },
-});
+})
