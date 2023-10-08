@@ -26,7 +26,10 @@ type Props = {
 export const ShopReviewItem: React.FC<Props> = ({ shop, onPress }: Props) => {
   const { name, place, imageUrl, score } = shop
   return (
-    <TouchableOpacity style={styles.container} onPress={onPress}>
+    <TouchableOpacity
+      style={styles.container}
+      onPress={onPress ? onPress : () => {}}
+    >
       <Image source={{ uri: imageUrl }} style={styles.image} />
       <Text style={styles.nameText}>{name}</Text>
       <Text style={styles.placeText}>{place}</Text>
