@@ -10,7 +10,7 @@ import { FeatherIconName } from "@/types/iconName"
 const SIZE = 56
 
 type Props = {
-  iconName: string
+  iconName: FeatherIconName
   onPress: (event: GestureResponderEvent) => void
 }
 
@@ -20,7 +20,7 @@ export const FloatingActionButton: React.FC<Props> = ({
 }: Props) => {
   return (
     <TouchableOpacity style={styles.container} onPress={onPress}>
-      <Feather name={iconName as FeatherIconName} color="#fff" size={30} />
+      <Feather name={iconName} color="#fff" size={30} />
     </TouchableOpacity>
   )
 }

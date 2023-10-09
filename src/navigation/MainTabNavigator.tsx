@@ -24,6 +24,8 @@ export const MainTabNavigator = () => {
         iconName = "home"
       } else if (route.name === "User") {
         iconName = "user"
+      } else {
+        iconName = "info" // default icon
       }
 
       return (

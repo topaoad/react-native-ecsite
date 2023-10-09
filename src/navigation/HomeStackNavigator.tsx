@@ -9,6 +9,22 @@ import { CreateReviewScreen } from "../screens/createReviewScreen"
 const Stack = createStackNavigator<RootStackParamList>()
 const RootStack = createStackNavigator<RootStackParamList>()
 
+const MainStack = () => (
+  <Stack.Navigator
+    screenOptions={{
+      headerTintColor: "#000",
+    }}
+  >
+    <Stack.Screen
+      name="Home"
+      component={HomeScreen}
+      options={{ headerShown: false }}
+    />
+    <Stack.Screen name="Shop" component={ShopScreen} />
+  </Stack.Navigator>
+)
+
+
 export const HomeStackNavigator = () => (
   // <Stack.Navigator
   //   screenOptions={{
@@ -32,18 +48,4 @@ export const HomeStackNavigator = () => (
     />
     <RootStack.Screen name="CreateReview" component={CreateReviewScreen} />
   </RootStack.Navigator>
-)
-const MainStack = () => (
-  <Stack.Navigator
-    screenOptions={{
-      headerTintColor: "#000",
-    }}
-  >
-    <Stack.Screen
-      name="Home"
-      component={HomeScreen}
-      options={{ headerShown: false }}
-    />
-    <Stack.Screen name="Shop" component={ShopScreen} />
-  </Stack.Navigator>
 )
