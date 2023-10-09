@@ -1,22 +1,22 @@
-import * as firebase from "firebase";
+import firebase from "firebase/compat/app"
 
 type UserRef = {
-  id: string;
-  name: string;
-};
+  id: string
+  name: string
+}
 
 type ShopRef = {
-  id: string;
-  name: string;
-};
+  id: string
+  name: string
+}
 
 export type Review = {
-  id?: string;
-  text: string;
-  score: number;
-  imageUrl: string;
-  user: UserRef;
-  shop: ShopRef;
-  updatedAt: firebase.firestore.Timestamp;
-  createdAt: firebase.firestore.Timestamp;
-};
+  id?: string
+  text: string
+  score: number
+  imageUrl: string
+  user: UserRef
+  shop: ShopRef
+  updatedAt: firebase.firestore.Timestamp
+  createdAt: firebase.firestore.Timestamp
+}
