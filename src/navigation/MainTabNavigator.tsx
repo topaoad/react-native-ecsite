@@ -11,28 +11,33 @@ import { UserScreen } from "../screens/userScreen"
 /* types */
 import { RootStackParamList } from "../types/navigation"
 import { ViewStyle } from "react-native"
+import { FeatherIconName } from "@/types/iconName"
 
 const Tab = createBottomTabNavigator<RootStackParamList>()
 
 export const MainTabNavigator = () => {
   const screenOptions = ({ route }: any) => ({
     tabBarIcon: ({ focused, color, size }: any) => {
-      let iconName: any
+      let iconName
 
       if (route.name === "Home") {
         iconName = "home"
       } else if (route.name === "User") {
         iconName = "user"
+      } else {
+        iconName = "info" // default icon
       }
 
-      return <Feather name={iconName} size={size} color={color} />
+      return (
+        <Feather name={iconName as FeatherIconName} size={size} color={color} />
+      )
     },
     tabBarActiveTintColor: "#900",
     tabBarInactiveTintColor: "#999",
     headerShown: false,
     // ここでタブバーを非表示にしている
     tabBarStyle: {
-      display: "none",
+      // display: "none",
     } as ViewStyle,
   })
 
