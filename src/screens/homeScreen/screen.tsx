@@ -28,19 +28,19 @@ export const HomeScreen = ({ navigation }: Props) => {
   const onPressShop = (shop: Shop) => {
     navigation.navigate("Shop", { shop })
   }
-  
+  console.log(shops)
   return (
     <SafeAreaView style={styles.container}>
-      <View style={styles.flatListContainer}>
-        <FlatList
-          data={shops}
-          renderItem={({ item }: { item: Shop }) => (
-            <ShopReviewItem shop={item} onPress={() => onPressShop(item)} />
-          )}
-          keyExtractor={(item, index) => index.toString()}
-          numColumns={2}
-        />
-      </View>
+      {/* <View style={styles.flatListContainer}> */}
+      <FlatList
+        data={shops}
+        renderItem={({ item }: { item: Shop }) => (
+          <ShopReviewItem shop={item} onPress={() => onPressShop(item)} />
+        )}
+        keyExtractor={(item, index) => index.toString()}
+        numColumns={2}
+      />
+      {/* </View> */}
     </SafeAreaView>
   )
 }
