@@ -1,22 +1,22 @@
-import React from "react";
-import { View, StyleSheet, Image, Text } from "react-native";
-import { LinearGradient } from "expo-linear-gradient";
+import React from "react"
+import { View, StyleSheet, Image, Text } from "react-native"
+import { LinearGradient } from "expo-linear-gradient"
 /* components */
-import { Stars } from "./Stars";
+import { Stars } from "./Stars"
 /* types */
-import { Shop } from "../types/shop";
+import { Shop } from "../types/shop"
 
 type Props = {
-  shop: Shop;
-};
+  shop: Shop
+}
 
 export const ShopDetail: React.FC<Props> = ({ shop }: Props) => {
-  const { name, place, imageUrl, score } = shop;
+  const { name, place, imageUrl, score } = shop
 
   return (
     <View style={styles.container}>
       <View style={styles.image}>
-        <Image style={styles.image} source={{ uri: imageUrl }}></Image>
+        <Image style={styles.image} source={{ uri: imageUrl }} />
         <LinearGradient
           colors={["transparent", "rgba(0,0,0,0.8)"]}
           style={styles.gradient}
@@ -31,7 +31,7 @@ export const ShopDetail: React.FC<Props> = ({ shop }: Props) => {
       </View>
     </View>
   )
-};
+}
 
 const styles = StyleSheet.create({
   container: {
