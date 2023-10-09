@@ -4,12 +4,22 @@ import { getAnalytics } from "firebase/analytics"
 import {
   Firestore,
   collection,
+  doc,
+  getDoc,
   getDocs,
   getFirestore,
   orderBy,
   query,
+  setDoc,
   where,
 } from "firebase/firestore"
+import {
+  getAuth,
+  signInAnonymously,
+  onAuthStateChanged,
+  User,
+} from "firebase/auth"
+import { initialUser } from "../types/user"
 
 const firebaseConfig = {
   apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
@@ -37,3 +47,84 @@ export const getShops = async (): Promise<Shop[]> => {
   }))
   return shops
 }
+
+export const signin = async (): Promise<any> => {
+  const auth = await getAuth()
+  try {
+    await signInAnonymously(auth)
+  } catch (error: any) {
+    const errorCode = error.code
+    const errorMessage = error.message
+    console.log(errorCode, errorMessage)
+  }
+
+  return new Promise((resolve, reject) => {
+    onAuthStateChanged(auth, async (user) => {
+      if (user) {
+        // User is signed in, you can get the user's information here.
+        const uid = user.uid
+        // const isAnonymous = user.isAnonymous
+        // const displayName = user.displayName
+        // const photoURL = user.photoURL
+        // const email = user.email
+        // const emailVerified = user.emailVerified
+        // const phoneNumber = user.phoneNumber
+        // const providerData = user.providerData
+        // resolve(user)
+        const userDoc = await getDoc(doc(db, "users", uid))
+        if (!userDoc.exists) {
+          await setDoc(doc(db, "users", uid), initialUser)
+          resolve({
+            ...initialUser,
+            id: uid,
+          })
+        } else {
+          resolve({
+            id: uid,
+            ...userDoc.data(),
+          })
+        }
+      } else {
+        // User is signed out.
+        console.log("signed out")
+        reject(new Error("User is signed out"))
+      }
+    })
+  })
+}
+
+// リファクタ案
+// export const signin = async () => {
+//   const auth = await getAuth()
+//   const signInPromise = signInAnonymously(auth)
+
+//   return new Promise((resolve, reject) => {
+//     const unsubscribe = onAuthStateChanged(auth, (user) => {
+//       try {
+//         if (user) {
+//           // User is signed in, you can get the user's information here.
+//           // ...
+//           resolve(user)
+//         } else {
+//           // User is signed out.
+//           console.log("signed out")
+//           reject(new Error("User is signed out"))
+//         }
+//       } catch (error) {
+//         reject(error)
+//       }
+//     })
+
+//     signInPromise
+//       .then(() => {
+//         // Signed in..
+//       })
+//       .catch((error) => {
+//         const errorCode = error.code
+//         const errorMessage = error.message
+//         console.log(errorCode, errorMessage)
+//         unsubscribe()
+//         reject(error)
+//       })
+//   })
+// }
