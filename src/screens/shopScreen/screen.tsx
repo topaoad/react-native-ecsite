@@ -4,6 +4,7 @@ import { RouteProp } from "@react-navigation/native"
 import { RootStackParamList } from "@/types/navigation"
 import { StackNavigationProp } from "@react-navigation/stack"
 import { ShopDetail } from "../../components/ShopDetail"
+import { FloatingActionButton } from "../../components/FloatingActionButton"
 
 type Props = {
   navigation: StackNavigationProp<RootStackParamList, "Shop">
@@ -20,6 +21,10 @@ export const ShopScreen: React.FC<Props> = ({ navigation, route }: Props) => {
   return (
     <SafeAreaView style={styles.container}>
       <ShopDetail shop={shop} />
+      <FloatingActionButton
+        iconName="plus"
+        onPress={() => navigation.navigate("CreateReview", { shop })}
+      />
     </SafeAreaView>
   )
 }
