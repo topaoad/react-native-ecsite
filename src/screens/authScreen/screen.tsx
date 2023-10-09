@@ -8,8 +8,12 @@ export const AuthScreen: React.FC = () => {
   const { user, setUser } = useContext(UserContext)
   useEffect(() => {
     const fetchUser = async () => {
-      const user: User = await signin()
-      setUser(user)
+      try {
+        const user: User = await signin()
+        setUser(user)
+      } catch (error) {
+        console.error(error)
+      }
     }
     fetchUser()
   }, [])
