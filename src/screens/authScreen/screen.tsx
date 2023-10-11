@@ -17,7 +17,7 @@ export const AuthScreen: React.FC = () => {
     }
     fetchUser()
   }, [])
-  console.log(user)
+
   return (
     <SafeAreaView style={styles.container}>
       <ActivityIndicator size="large" />

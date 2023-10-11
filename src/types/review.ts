@@ -1,4 +1,5 @@
 import firebase from "firebase/compat/app"
+import { Timestamp } from "firebase/firestore"
 
 type UserRef = {
   id: string
@@ -17,6 +18,6 @@ export type Review = {
   imageUrl: string
   user: UserRef
   shop: ShopRef
-  updatedAt: firebase.firestore.Timestamp
-  createdAt: firebase.firestore.Timestamp
+  updatedAt: Timestamp
+  createdAt: Timestamp
 }

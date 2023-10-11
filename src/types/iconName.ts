@@ -6,3 +6,4 @@ export type FeatherIconName =
   | "home"
   | "plus"
   | "x"
+  | "camera"
