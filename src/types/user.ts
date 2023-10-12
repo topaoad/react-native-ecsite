@@ -1,11 +1,12 @@
 import firebase from "firebase/compat/app"
+import { Timestamp } from "firebase/firestore"
 
 export type User = {
   id?: string
   name: string
   pushToken?: string
-  updatedAt: string
-  createdAt: string
+  updatedAt: Timestamp
+  createdAt: Timestamp
 }
 
 export const initialUser: User = {
@@ -13,6 +14,6 @@ export const initialUser: User = {
   // updatedAt: firebase.firestore.Timestamp.now(),
   // createdAt: firebase.firestore.Timestamp.now(),
   // 今のローカル時間を取得する
-  updatedAt: new Date().toISOString(),
-  createdAt: new Date().toISOString(),
+  updatedAt: Timestamp.fromDate(new Date()),
+  createdAt: Timestamp.fromDate(new Date()),
 }

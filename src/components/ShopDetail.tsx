@@ -17,6 +17,12 @@ export const ShopDetail: React.FC<Props> = ({ shop }: Props) => {
     <View style={styles.container}>
       <View style={styles.image}>
         <Image style={styles.image} source={{ uri: imageUrl }} />
+        {/* 以下のように、画像がないときはローカルの画像を差し出すことが望ましい */}
+        {/* <Image
+          style={styles.image}
+          source={{ uri: review.imageUrl }}
+          defaultSource={require("path/to/default/image.png")}
+        /> */}
         <LinearGradient
           colors={["transparent", "rgba(0,0,0,0.8)"]}
           style={styles.gradient}

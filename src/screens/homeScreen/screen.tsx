@@ -28,7 +28,6 @@ export const HomeScreen = ({ navigation }: Props) => {
   const onPressShop = (shop: Shop) => {
     navigation.navigate("Shop", { shop })
   }
-  console.log(shops)
   return (
     <SafeAreaView style={styles.container}>
       {/* <View style={styles.flatListContainer}> */}
