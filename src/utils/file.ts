@@ -1,3 +1,7 @@
 export const getExtention = (path: string) => {
-  return path.split(".").pop()
+  if (path && path.includes(".")) {
+    return path.split(".").pop()
+  } else {
+    throw new Error("Invalid path provided")
+  }
 }

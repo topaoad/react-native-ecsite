@@ -25,10 +25,6 @@ export const TextArea: React.FC<Props> = ({
 }: Props) => {
   const inputRef = useRef<TextInput>(null)
 
-  const handleBlur = () => {
-    Keyboard.dismiss()
-  }
-
   const handlePress = () => {
     Keyboard.dismiss()
     inputRef.current?.blur()
