@@ -106,7 +106,7 @@ export const CreateReviewScreen: React.FC<Props> = ({
       <StarInput score={score} onChangeScore={(value) => setScore(value)} />
       <TouchableOpacity onPress={handlePress}>
         <View style={[styles.textContainer]}>
-          <Text style={styles.label}>"レビュー"</Text>
+          <Text style={styles.label}>レビュー</Text>
           <TextInput
             ref={inputRef}
             style={styles.input}
