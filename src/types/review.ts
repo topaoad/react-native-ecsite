@@ -1,4 +1,3 @@
-import firebase from "firebase/compat/app"
 import { Timestamp } from "firebase/firestore"
 
 type UserRef = {
